@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="PT Stats">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#1a3a6b">
+  <meta name="description" content="Installazione App Statistiche Commerciali — Pannelli Termici. Guida Tailscale + icona Home.">
+  <title>Installazione App Commerciali — Pannelli Termici</title>
+  <!-- Pagina pubblica standalone: non dipende dal server RCQ. -->
+  <style>
+    :root { --accent: #1a4a7a; --ok: #2e7d32; --muted: #5a6b7d; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(165deg, #0f1724 0%, #1a3a6b 50%, #1e2d42 100%);
+      color: #e8eef6;
+      min-height: 100vh;
+      padding: 1rem 1rem 2.5rem;
+    }
+    .wrap { max-width: 520px; margin: 0 auto; }
+    .brand {
+      text-align: center;
+      margin: 0.5rem auto 0.85rem;
+      padding: 0.85rem 1rem;
+      background: #fff;
+      color: #1a3a6b;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+    }
+    .brand small { display: block; font-weight: 600; font-size: 0.72rem; color: #5a6b7d; margin-top: 0.2rem; }
+    h1 { font-size: 1.28rem; text-align: center; margin: 0 0 0.25rem; }
+    .sub { text-align: center; opacity: 0.82; font-size: 0.88rem; margin: 0 0 1rem; }
+    .steps { display: flex; gap: 0.35rem; justify-content: center; margin-bottom: 0.85rem; }
+    .step-dot {
+      width: 2rem; height: 2rem; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; opacity: 0.55;
+    }
+    .step-dot.active { background: #fff; color: var(--accent); opacity: 1; border-color: #fff; }
+    .step-dot.done { background: var(--ok); border-color: var(--ok); opacity: 1; }
+    .card {
+      background: #fff; color: #1a2433; border-radius: 12px;
+      padding: 1rem 1.05rem 1.1rem; box-shadow: 0 12px 32px rgba(0,0,0,.28);
+    }
+    .card h2 { margin: 0 0 0.5rem; font-size: 1rem; color: var(--accent); }
+    .card ol { margin: 0.35rem 0 0; padding-left: 1.15rem; }
+    .card li { margin: 0.35rem 0; line-height: 1.42; font-size: 0.9rem; }
+    .mono {
+      font-family: ui-monospace, Consolas, monospace;
+      background: #eef3f8; padding: 0.12rem 0.38rem; border-radius: 4px; font-size: 0.84rem;
+      word-break: break-all;
+    }
+    .note { font-size: 0.8rem; color: var(--muted); margin-top: 0.55rem; }
+    .btn {
+      display: block; width: 100%; text-align: center; text-decoration: none;
+      border: none; border-radius: 8px; padding: 0.78rem 1rem;
+      font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 0.65rem;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ok { background: var(--ok); color: #fff; }
+    .btn-ghost {
+      background: transparent; color: #dff;
+      border: 1px solid rgba(255,255,255,.35); margin-top: 0.55rem;
+    }
+    .btn-row { display: flex; gap: 0.5rem; margin-top: 0.65rem; }
+    .btn-row .btn { margin-top: 0; flex: 1; }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .badge-store {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      background: #eef3f8; color: var(--accent); border-radius: 999px;
+      padding: 0.2rem 0.55rem; font-size: 0.75rem; font-weight: 700; margin-bottom: 0.45rem;
+    }
+    .ios-only, .and-only, .desk-only { display: none; }
+    body.is-ios .ios-only { display: block; }
+    body.is-android .and-only { display: block; }
+    body.is-desktop .desk-only { display: block; }
+    .copy-row { display: flex; gap: 0.4rem; margin-top: 0.5rem; align-items: stretch; }
+    .copy-row .mono { flex: 1; display: flex; align-items: center; }
+    .copy-row button {
+      border: none; border-radius: 6px; background: var(--accent); color: #fff;
+      font-weight: 700; padding: 0.45rem 0.65rem; cursor: pointer; font-size: 0.8rem;
+    }
+    .footer-note { text-align: center; font-size: 0.75rem; opacity: 0.65; margin-top: 1.25rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">Pannelli Termici<small>App Statistiche Commerciali</small></div>
+    <h1>Installazione guidata</h1>
+    <p class="sub">Funziona da ovunque · non serve il server acceso per questa guida</p>
+
+    <div class="steps" aria-label="Passi installazione">
+      <div class="step-dot active" data-step-dot="1">1</div>
+      <div class="step-dot" data-step-dot="2">2</div>
+      <div class="step-dot" data-step-dot="3">3</div>
+      <div class="step-dot" data-step-dot="4">4</div>
+    </div>
+
+    <section class="panel active" data-step="1">
+      <div class="card">
+        <span class="badge-store" id="store-label">Store</span>
+        <h2>Passo 1 — Installa Tailscale</h2>
+        <ol>
+          <li>Tocca il pulsante: si apre lo <strong>store del telefono</strong> (App Store o Play Store).</li>
+          <li>Installa l’app <strong>Tailscale</strong> e aprila.</li>
+          <li>Torna su questa pagina e vai al passo 2.</li>
+        </ol>
+        <a class="btn btn-primary" id="btn-store-tailscale" href="https://tailscale.com/download" rel="noopener">Installa Tailscale dallo store</a>
+        <p class="note">Senza Tailscale l’app aziendale non è raggiungibile fuori sede.</p>
+      </div>
+      <button type="button" class="btn btn-ok" data-next="2">Ho installato Tailscale → Avanti</button>
+    </section>
+
+    <section class="panel" data-step="2">
+      <div class="card">
+        <h2>Passo 2 — Accedi a Tailscale</h2>
+        <ol>
+          <li>Apri <strong>Tailscale</strong> sul telefono.</li>
+          <li>Accedi con l’account aziendale:<br>
+            <div class="copy-row">
+              <span class="mono" id="mail-account">magazzino@pannellitermici.it</span>
+              <button type="button" data-copy="magazzino@pannellitermici.it">Copia</button>
+            </div>
+          </li>
+          <li>Password: <em>te la fornisce Luca / IT</em> (non è in questo link).</li>
+          <li>Dopo il login, Luca accetterà la richiesta di accesso dalla coda Tailscale.</li>
+          <li>Verifica che Tailscale risulti <strong>Connected / Connesso</strong>.</li>
+        </ol>
+        <a class="btn btn-primary" href="tailscale://">Apri app Tailscale</a>
+        <p class="note">Se il link non apre l’app, avviala manualmente dalla Home.</p>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-ghost" data-prev="1">Indietro</button>
+        <button type="button" class="btn btn-ok" data-next="3">Tailscale connesso → Avanti</button>
+      </div>
+    </section>
+
+    <section class="panel" data-step="3">
+      <div class="card">
+        <h2>Passo 3 — Apri le statistiche</h2>
+        <p style="margin:0;font-size:0.9rem;">Hub sola lettura (consuntivo, carichi, NC, manutenzioni, commesse, MP, clienti, inventario).</p>
+        <p class="note" style="margin-top:0.55rem;">Serve Tailscale connesso <strong>e</strong> il server aziendale acceso.</p>
+        <a class="btn btn-ok" id="btn-apri-stats" href="#">Apri hub statistiche</a>
+        <div class="copy-row">
+          <span class="mono" id="url-stats"></span>
+          <button type="button" id="btn-copy-stats">Copia</button>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-ghost" data-prev="2">Indietro</button>
+        <button type="button" class="btn btn-ok" data-next="4">Avanti — icona Home</button>
+      </div>
+    </section>
+
+    <section class="panel" data-step="4">
+      <div class="card ios-only">
+        <h2>Passo 4 — Icona Home (iPhone / iPad)</h2>
+        <ol>
+          <li>Apri l’hub statistiche (passo 3) in <strong>Safari</strong>.</li>
+          <li>Tocca <strong>Condividi</strong>.</li>
+          <li>Scegli <strong>Aggiungi a Home</strong>.</li>
+          <li>Nome suggerito: <span class="mono">PT Stats</span> → Aggiungi.</li>
+        </ol>
+      </div>
+      <div class="card and-only">
+        <h2>Passo 4 — Icona Home (Android)</h2>
+        <ol>
+          <li>Apri l’hub statistiche (passo 3) in <strong>Chrome</strong>.</li>
+          <li>Menu ⋮ → <strong>Installa app</strong> oppure <strong>Aggiungi a Home</strong>.</li>
+          <li>Conferma: comparirà l’icona <span class="mono">PT Stats</span>.</li>
+        </ol>
+      </div>
+      <div class="card desk-only">
+        <h2>Passo 4 — Da PC</h2>
+        <p style="margin:0;font-size:0.9rem;">Invia questo link di installazione al telefono commerciale e completa i passi 1–4 sul dispositivo.</p>
+        <div class="copy-row">
+          <span class="mono" id="url-self"></span>
+          <button type="button" id="btn-copy-self">Copia link</button>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-ghost" data-prev="3">Indietro</button>
+        <a class="btn btn-ok" id="btn-fine" href="#">Fine — apri statistiche</a>
+      </div>
+    </section>
+
+    <p class="footer-note">Guida pubblica Pannelli Termici · installazione commerciali</p>
+  </div>
+  <script>
+    (function () {
+      /* URL hub dopo Tailscale (server RCQ). Aggiornare se cambia IP Tailscale. */
+      var STATS_BASE = "http://100.99.197.92:3000";
+      var STATS_URL = STATS_BASE + "/?view=commerciale";
+
+      var STORE = {
+        ios: "https://apps.apple.com/app/tailscale/id1470499037",
+        android: "market://details?id=com.tailscale.ipn",
+        androidWeb: "https://play.google.com/store/apps/details?id=com.tailscale.ipn",
+        desktop: "https://tailscale.com/download"
+      };
+
+      var ua = navigator.userAgent || "";
+      var ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      var and = /Android/i.test(ua);
+      document.body.classList.add(ios ? "is-ios" : and ? "is-android" : "is-desktop");
+
+      var storeBtn = document.getElementById("btn-store-tailscale");
+      var storeLabel = document.getElementById("store-label");
+      if (ios) {
+        storeBtn.href = STORE.ios;
+        storeLabel.textContent = "App Store";
+      } else if (and) {
+        storeBtn.href = STORE.android;
+        storeLabel.textContent = "Play Store";
+        storeBtn.addEventListener("click", function () {
+          setTimeout(function () { location.href = STORE.androidWeb; }, 1100);
+        });
+      } else {
+        storeBtn.href = STORE.desktop;
+        storeLabel.textContent = "Download PC";
+      }
+
+      function setStatsLinks() {
+        ["btn-apri-stats", "btn-fine"].forEach(function (id) {
+          var a = document.getElementById(id);
+          if (a) a.href = STATS_URL;
+        });
+        var u = document.getElementById("url-stats");
+        if (u) u.textContent = STATS_URL;
+      }
+      setStatsLinks();
+
+      var selfUrl = location.href.split("#")[0].split("?")[0];
+      var selfEl = document.getElementById("url-self");
+      if (selfEl) selfEl.textContent = selfUrl;
+
+      function copyText(t) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(t);
+        }
+        var ta = document.createElement("textarea");
+        ta.value = t;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+        return Promise.resolve();
+      }
+
+      document.querySelectorAll("[data-copy]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          copyText(b.getAttribute("data-copy")).then(function () {
+            b.textContent = "OK";
+            setTimeout(function () { b.textContent = "Copia"; }, 1200);
+          });
+        });
+      });
+      var cs = document.getElementById("btn-copy-stats");
+      if (cs) cs.addEventListener("click", function () {
+        copyText(STATS_URL).then(function () {
+          cs.textContent = "OK";
+          setTimeout(function () { cs.textContent = "Copia"; }, 1200);
+        });
+      });
+      var cself = document.getElementById("btn-copy-self");
+      if (cself) cself.addEventListener("click", function () {
+        copyText(selfUrl).then(function () {
+          cself.textContent = "OK";
+          setTimeout(function () { cself.textContent = "Copia link"; }, 1200);
+        });
+      });
+
+      var current = 1;
+      function showStep(n) {
+        current = Math.max(1, Math.min(4, n));
+        document.querySelectorAll(".panel[data-step]").forEach(function (p) {
+          p.classList.toggle("active", Number(p.getAttribute("data-step")) === current);
+        });
+        document.querySelectorAll(".step-dot").forEach(function (d) {
+          var s = Number(d.getAttribute("data-step-dot"));
+          d.classList.toggle("active", s === current);
+          d.classList.toggle("done", s < current);
+        });
+        try { history.replaceState(null, "", "?step=" + current); } catch (_) {}
+      }
+      document.querySelectorAll("[data-next]").forEach(function (b) {
+        b.addEventListener("click", function () { showStep(Number(b.getAttribute("data-next"))); });
+      });
+      document.querySelectorAll("[data-prev]").forEach(function (b) {
+        b.addEventListener("click", function () { showStep(Number(b.getAttribute("data-prev"))); });
+      });
+      var stepParam = Number(new URLSearchParams(location.search).get("step"));
+      if (stepParam >= 1 && stepParam <= 4) showStep(stepParam);
+    })();
+  </script>
+</body>
+</html>
