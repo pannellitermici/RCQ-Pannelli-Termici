@@ -8,11 +8,10 @@
   <meta name="apple-mobile-web-app-title" content="PT Stats">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#1a3a6b">
-  <meta name="description" content="Installazione App Statistiche Commerciali — Pannelli Termici. Guida Tailscale + icona Home.">
+  <meta name="description" content="Installazione App Statistiche Commerciali — Pannelli Termici. Guida Tailscale + invito + icona Home.">
   <title>Installazione App Commerciali — Pannelli Termici</title>
-  <!-- Pagina pubblica standalone: non dipende dal server RCQ. -->
   <style>
-    :root { --accent: #1a4a7a; --ok: #2e7d32; --muted: #5a6b7d; }
+    :root { --accent: #1a4a7a; --ok: #2e7d32; --muted: #5a6b7d; --danger: #b71c1c; }
     * { box-sizing: border-box; }
     body {
       margin: 0;
@@ -37,21 +36,22 @@
     .brand small { display: block; font-weight: 600; font-size: 0.72rem; color: #5a6b7d; margin-top: 0.2rem; }
     h1 { font-size: 1.28rem; text-align: center; margin: 0 0 0.25rem; }
     .sub { text-align: center; opacity: 0.82; font-size: 0.88rem; margin: 0 0 1rem; }
-    .steps { display: flex; gap: 0.35rem; justify-content: center; margin-bottom: 0.85rem; }
+    .steps { display: flex; gap: 0.3rem; justify-content: center; margin-bottom: 0.85rem; flex-wrap: wrap; }
     .step-dot {
-      width: 2rem; height: 2rem; border-radius: 50%;
+      width: 1.85rem; height: 1.85rem; border-radius: 50%;
       border: 2px solid rgba(255,255,255,.35);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.78rem; font-weight: 700; opacity: 0.55;
+      font-size: 0.72rem; font-weight: 700; opacity: 0.55;
     }
     .step-dot.active { background: #fff; color: var(--accent); opacity: 1; border-color: #fff; }
     .step-dot.done { background: var(--ok); border-color: var(--ok); opacity: 1; }
     .card {
       background: #fff; color: #1a2433; border-radius: 12px;
       padding: 1rem 1.05rem 1.1rem; box-shadow: 0 12px 32px rgba(0,0,0,.28);
+      margin-bottom: 0.65rem;
     }
     .card h2 { margin: 0 0 0.5rem; font-size: 1rem; color: var(--accent); }
-    .card ol { margin: 0.35rem 0 0; padding-left: 1.15rem; }
+    .card ol, .card ul { margin: 0.35rem 0 0; padding-left: 1.15rem; }
     .card li { margin: 0.35rem 0; line-height: 1.42; font-size: 0.9rem; }
     .mono {
       font-family: ui-monospace, Consolas, monospace;
@@ -64,6 +64,7 @@
       border: none; border-radius: 8px; padding: 0.78rem 1rem;
       font-size: 0.95rem; font-weight: 700; cursor: pointer; margin-top: 0.65rem;
     }
+    .btn:disabled { opacity: 0.55; cursor: wait; }
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-ok { background: var(--ok); color: #fff; }
     .btn-ghost {
@@ -90,6 +91,35 @@
       font-weight: 700; padding: 0.45rem 0.65rem; cursor: pointer; font-size: 0.8rem;
     }
     .footer-note { text-align: center; font-size: 0.75rem; opacity: 0.65; margin-top: 1.25rem; }
+    .callout {
+      background: #fff8e6;
+      border: 1px solid #f0d58a;
+      border-radius: 8px;
+      padding: 0.65rem 0.75rem;
+      font-size: 0.82rem;
+      color: #5a4a20;
+      margin-top: 0.55rem;
+    }
+    .callout-ok {
+      background: #e8f5e9;
+      border-color: #a5d6a7;
+      color: #1b5e20;
+    }
+    .callout-err {
+      background: #ffebee;
+      border-color: #ef9a9a;
+      color: var(--danger);
+    }
+    .field { margin-top: 0.65rem; }
+    .field label {
+      display: block; font-size: 0.78rem; font-weight: 700; color: #445; margin-bottom: 0.25rem;
+    }
+    .field input, .field select {
+      width: 100%; padding: 0.55rem 0.65rem; border: 1px solid #c5d3e0;
+      border-radius: 6px; font-size: 0.92rem;
+    }
+    #invito-status { display: none; margin-top: 0.65rem; }
+    #invito-status.show { display: block; }
   </style>
 </head>
 <body>
@@ -103,6 +133,8 @@
       <div class="step-dot" data-step-dot="2">2</div>
       <div class="step-dot" data-step-dot="3">3</div>
       <div class="step-dot" data-step-dot="4">4</div>
+      <div class="step-dot" data-step-dot="5">5</div>
+      <div class="step-dot" data-step-dot="6">6</div>
     </div>
 
     <section class="panel active" data-step="1">
@@ -110,9 +142,9 @@
         <span class="badge-store" id="store-label">Store</span>
         <h2>Passo 1 — Installa Tailscale</h2>
         <ol>
-          <li>Tocca il pulsante: si apre lo <strong>store del telefono</strong> (App Store o Play Store).</li>
+          <li>Tocca il pulsante: si apre lo <strong>store del telefono</strong>.</li>
           <li>Installa l’app <strong>Tailscale</strong> e aprila.</li>
-          <li>Torna su questa pagina e vai al passo 2.</li>
+          <li>Torna qui e vai al passo 2.</li>
         </ol>
         <a class="btn btn-primary" id="btn-store-tailscale" href="https://tailscale.com/download" rel="noopener">Installa Tailscale dallo store</a>
         <p class="note">Senza Tailscale l’app aziendale non è raggiungibile fuori sede.</p>
@@ -122,31 +154,59 @@
 
     <section class="panel" data-step="2">
       <div class="card">
-        <h2>Passo 2 — Accedi a Tailscale</h2>
+        <h2>Passo 2 — Crea il tuo account Tailscale</h2>
         <ol>
-          <li>Apri <strong>Tailscale</strong> sul telefono.</li>
-          <li>Accedi con l’account aziendale:<br>
-            <div class="copy-row">
-              <span class="mono" id="mail-account">magazzino@pannellitermici.it</span>
-              <button type="button" data-copy="magazzino@pannellitermici.it">Copia</button>
-            </div>
-          </li>
-          <li>Password: <em>te la fornisce Luca / IT</em> (non è in questo link).</li>
-          <li>Dopo il login, Luca accetterà la richiesta di accesso dalla coda Tailscale.</li>
-          <li>Verifica che Tailscale risulti <strong>Connected / Connesso</strong>.</li>
+          <li>Apri l’app <strong>Tailscale</strong>.</li>
+          <li>Scegli <strong>Get started / Accedi</strong> e <strong>crea un account nuovo</strong> (Google, Microsoft o email). Usa la <strong>tua</strong> email di lavoro o personale.</li>
+          <li><strong>Non</strong> usare password condivise: ognuno ha il proprio account.</li>
+          <li>Poi compila il modulo sotto: partirà una <strong>email automatica a Luca</strong> con la richiesta di invito alla rete aziendale.</li>
         </ol>
         <a class="btn btn-primary" href="tailscale://">Apri app Tailscale</a>
-        <p class="note">Se il link non apre l’app, avviala manualmente dalla Home.</p>
+
+        <div class="field">
+          <label for="invito-nome">Il tuo nome e cognome</label>
+          <input type="text" id="invito-nome" autocomplete="name" placeholder="es. Mario Rossi" required>
+        </div>
+        <div class="field">
+          <label for="invito-email">Email usata per creare l’account Tailscale</label>
+          <input type="email" id="invito-email" autocomplete="email" placeholder="es. mario.rossi@…" required>
+        </div>
+        <div class="field">
+          <label for="invito-note">Note (opzionale)</label>
+          <input type="text" id="invito-note" placeholder="es. telefono commerciale magazzino">
+        </div>
+
+        <button type="button" class="btn btn-primary" id="btn-invia-invito">Invia richiesta invito a Luca</button>
+        <div id="invito-status" class="callout" role="status"></div>
+        <div class="callout">Luca riceve l’email → ti invita dalla console Tailscale → tu ricevi l’invito sull’email dell’account. Poi passo 3.</div>
       </div>
       <div class="btn-row">
         <button type="button" class="btn btn-ghost" data-prev="1">Indietro</button>
-        <button type="button" class="btn btn-ok" data-next="3">Tailscale connesso → Avanti</button>
+        <button type="button" class="btn btn-ok" data-next="3" id="btn-dopo-invito">Richiesta inviata → Avanti</button>
       </div>
     </section>
 
     <section class="panel" data-step="3">
       <div class="card">
-        <h2>Passo 3 — Apri le statistiche</h2>
+        <h2>Passo 3 — Accetta l’invito e connettiti</h2>
+        <ol>
+          <li>Controlla l’email dell’account Tailscale: arriva l’invito alla rete <strong>Pannelli Termici</strong>.</li>
+          <li>Apri il link di invito (o l’app Tailscale) e <strong>accetta</strong>.</li>
+          <li>In Tailscale verifica che risulti <strong>Connected / Connesso</strong>.</li>
+          <li>Se compare “Needs approval / In attesa”, Luca deve ancora approvare il dispositivo in console — attendi conferma.</li>
+        </ol>
+        <a class="btn btn-primary" href="tailscale://">Apri app Tailscale</a>
+        <p class="note">Solo dopo la connessione potrai aprire le statistiche aziendali (passo 4).</p>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-ghost" data-prev="2">Indietro</button>
+        <button type="button" class="btn btn-ok" data-next="4">Tailscale connesso → Avanti</button>
+      </div>
+    </section>
+
+    <section class="panel" data-step="4">
+      <div class="card">
+        <h2>Passo 4 — Apri le statistiche</h2>
         <p style="margin:0;font-size:0.9rem;">Hub sola lettura (consuntivo, carichi, NC, manutenzioni, commesse, MP, clienti, inventario).</p>
         <p class="note" style="margin-top:0.55rem;">Serve Tailscale connesso <strong>e</strong> il server aziendale acceso.</p>
         <a class="btn btn-ok" id="btn-apri-stats" href="#">Apri hub statistiche</a>
@@ -156,39 +216,82 @@
         </div>
       </div>
       <div class="btn-row">
-        <button type="button" class="btn btn-ghost" data-prev="2">Indietro</button>
-        <button type="button" class="btn btn-ok" data-next="4">Avanti — icona Home</button>
+        <button type="button" class="btn btn-ghost" data-prev="3">Indietro</button>
+        <button type="button" class="btn btn-ok" data-next="5">Avanti — icona Home</button>
       </div>
     </section>
 
-    <section class="panel" data-step="4">
+    <section class="panel" data-step="5">
       <div class="card ios-only">
-        <h2>Passo 4 — Icona Home (iPhone / iPad)</h2>
+        <h2>Passo 5 — Icona Home (iPhone / iPad)</h2>
+        <p style="margin:0 0 0.45rem;font-size:0.88rem;">Due opzioni. Consigliata: <strong>Comandi</strong> (apre Tailscale e poi le stats).</p>
         <ol>
-          <li>Apri l’hub statistiche (passo 3) in <strong>Safari</strong>.</li>
-          <li>Tocca <strong>Condividi</strong>.</li>
-          <li>Scegli <strong>Aggiungi a Home</strong>.</li>
-          <li>Nome suggerito: <span class="mono">PT Stats</span> → Aggiungi.</li>
+          <li>Apri l’app <strong>Comandi</strong> (Shortcuts).</li>
+          <li><strong>+</strong> → nuovo comando, nome <span class="mono">PT Stats</span>.</li>
+          <li>Aggiungi azione <strong>Apri app</strong> → scegli <strong>Tailscale</strong>.</li>
+          <li>Aggiungi azione <strong>Attendi</strong> → <strong>3 secondi</strong> (tempo per connettere).</li>
+          <li>Aggiungi azione <strong>Apri URL</strong> → incolla l’URL delle stats (passo 4).</li>
+          <li>Menu ⋯ → <strong>Aggiungi a Home</strong>.</li>
         </ol>
+        <div class="callout">iPhone non può far partire Tailscale da sola quando tocchi un’icona Safari. Il comando sopra è il modo ufficiale: un tocco → Tailscale → stats.</div>
+        <p class="note">Alternativa semplice (senza auto-Tailscale): apri le stats in Safari → Condividi → Aggiungi a Home.</p>
       </div>
       <div class="card and-only">
-        <h2>Passo 4 — Icona Home (Android)</h2>
+        <h2>Passo 5 — Icona Home (Android)</h2>
+        <p style="margin:0 0 0.45rem;font-size:0.88rem;">Prima attiva la connessione automatica, poi l’icona.</p>
         <ol>
-          <li>Apri l’hub statistiche (passo 3) in <strong>Chrome</strong>.</li>
-          <li>Menu ⋮ → <strong>Installa app</strong> oppure <strong>Aggiungi a Home</strong>.</li>
-          <li>Conferma: comparirà l’icona <span class="mono">PT Stats</span>.</li>
+          <li>In <strong>Tailscale</strong>: impostazioni → attiva connessione automatica / all’avvio (se presente).</li>
+          <li>In Android: <strong>Impostazioni → Rete e Internet → VPN</strong> → Tailscale → attiva <strong>VPN sempre attiva</strong> (Always-on VPN) se disponibile.</li>
+          <li>Apri le stats in <strong>Chrome</strong> → ⋮ → <strong>Installa app</strong> / <strong>Aggiungi a Home</strong> → nome <span class="mono">PT Stats</span>.</li>
         </ol>
+        <div class="callout">Con VPN sempre attiva, Tailscale resta pronto: aprendo PT Stats le pagine aziendali rispondono senza passaggi manuali.</div>
+        <p class="note">Se il telefono non ha “VPN sempre attiva”, nel passo 6 c’è un’alternativa con scorciatoia.</p>
       </div>
       <div class="card desk-only">
-        <h2>Passo 4 — Da PC</h2>
-        <p style="margin:0;font-size:0.9rem;">Invia questo link di installazione al telefono commerciale e completa i passi 1–4 sul dispositivo.</p>
+        <h2>Passo 5 — Da PC</h2>
+        <p style="margin:0;font-size:0.9rem;">Invia questo link al telefono commerciale e completa i passi sul dispositivo.</p>
         <div class="copy-row">
           <span class="mono" id="url-self"></span>
           <button type="button" id="btn-copy-self">Copia link</button>
         </div>
       </div>
       <div class="btn-row">
-        <button type="button" class="btn btn-ghost" data-prev="3">Indietro</button>
+        <button type="button" class="btn btn-ghost" data-prev="4">Indietro</button>
+        <button type="button" class="btn btn-ok" data-next="6">Avanti — auto Tailscale</button>
+      </div>
+    </section>
+
+    <section class="panel" data-step="6">
+      <div class="card ios-only">
+        <h2>Passo 6 — Auto-connessione Tailscale (iOS)</h2>
+        <ol>
+          <li>Apri <strong>Tailscale</strong> → Settings / Impostazioni.</li>
+          <li>Attiva opzioni tipo <strong>Use Tailscale DNS</strong> e lascia l’app autorizzata alla VPN.</li>
+          <li>In <strong>Comandi</strong>, se vuoi anche all’accensione: Automazione → <strong>Quando arrivo a…</strong> o <strong>Caricabatterie collegato</strong> → Apri Tailscale (opzionale).</li>
+        </ol>
+        <p class="note">Il comportamento affidabile sul lavoro è: icona <strong>PT Stats</strong> del Comando (passo 5) = apre Tailscale e poi le stats.</p>
+      </div>
+      <div class="card and-only">
+        <h2>Passo 6 — Auto-connessione Tailscale (Android)</h2>
+        <ol>
+          <li>Preferito: <strong>VPN sempre attiva</strong> (passo 5) — di solito basta.</li>
+          <li>Se manca: crea una scorciatoia con l’app gratis <strong>Routine</strong> (Samsung) / <strong>Shortcuts</strong> / <strong>Automate</strong>:
+            <ul>
+              <li>Azione 1: apri app <strong>Tailscale</strong></li>
+              <li>Azione 2: attendi 3–5 secondi</li>
+              <li>Azione 3: apri URL stats (copia dal passo 4)</li>
+            </ul>
+          </li>
+          <li>Metti quella scorciatoia in Home e usala come “PT Stats”.</li>
+        </ol>
+        <div class="callout">Android/iOS non permettono a una pagina web di avviare la VPN da sola per sicurezza. Serve VPN sempre attiva oppure una scorciatoia/comando.</div>
+      </div>
+      <div class="card desk-only">
+        <h2>Passo 6 — Riepilogo</h2>
+        <p style="margin:0;font-size:0.9rem;">Sul telefono: account Tailscale proprio → richiesta invito a Luca → connesso → icona Home (meglio comando/scorciatoia).</p>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-ghost" data-prev="5">Indietro</button>
         <a class="btn btn-ok" id="btn-fine" href="#">Fine — apri statistiche</a>
       </div>
     </section>
@@ -197,9 +300,13 @@
   </div>
   <script>
     (function () {
-      /* URL hub dopo Tailscale (server RCQ). Aggiornare se cambia IP Tailscale. */
       var STATS_BASE = "http://100.99.197.92:3000";
       var STATS_URL = STATS_BASE + "/?view=commerciale";
+      var MAX_STEP = 6;
+      /** Destinatario richiesta invito Tailscale (Luca). */
+      var INVITE_TO = "l.ripa@pannellitermici.it";
+      var INVITE_CC = "";
+      var TAILSCALE_USERS = "https://login.tailscale.com/admin/users";
 
       var STORE = {
         ios: "https://apps.apple.com/app/tailscale/id1470499037",
@@ -211,6 +318,7 @@
       var ua = navigator.userAgent || "";
       var ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
       var and = /Android/i.test(ua);
+      var deviceLabel = ios ? "iPhone/iPad" : and ? "Android" : "PC/altro";
       document.body.classList.add(ios ? "is-ios" : and ? "is-android" : "is-desktop");
 
       var storeBtn = document.getElementById("btn-store-tailscale");
@@ -279,9 +387,141 @@
         });
       });
 
+      function showInvitoStatus(ok, msg) {
+        var el = document.getElementById("invito-status");
+        if (!el) return;
+        el.className = "callout show " + (ok ? "callout-ok" : "callout-err");
+        el.textContent = msg;
+      }
+
+      function buildMailBody(nome, emailTs, note) {
+        return [
+          "Richiesta invito Tailscale — App Statistiche Commerciali",
+          "",
+          "Nome: " + nome,
+          "Email account Tailscale: " + emailTs,
+          "Dispositivo: " + deviceLabel,
+          "Note: " + (note || "(nessuna)"),
+          "Guida: " + selfUrl,
+          "",
+          "Azione: invita questa email dalla console Tailscale → Users:",
+          TAILSCALE_USERS,
+          "",
+          "(Messaggio generato automaticamente dalla guida installazione)"
+        ].join("\n");
+      }
+
+      function openMailto(nome, emailTs, note) {
+        var subject = "Richiesta invito Tailscale: " + nome;
+        var body = buildMailBody(nome, emailTs, note);
+        var url = "mailto:" + encodeURIComponent(INVITE_TO)
+          + (INVITE_CC ? ("?cc=" + encodeURIComponent(INVITE_CC) + "&") : "?")
+          + "subject=" + encodeURIComponent(subject)
+          + "&body=" + encodeURIComponent(body);
+        window.location.href = url;
+      }
+
+      function tryFormSubmit(nome, emailTs, note) {
+        return fetch("https://formsubmit.co/ajax/" + INVITE_TO, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            _subject: "Richiesta invito Tailscale: " + nome,
+            _template: "table",
+            _captcha: "false",
+            nome: nome,
+            email_tailscale: emailTs,
+            dispositivo: deviceLabel,
+            note: note || "",
+            guida: selfUrl,
+            azione: "Invita da " + TAILSCALE_USERS,
+            replyto: emailTs
+          })
+        }).then(function (r) {
+          return r.json().then(function (j) {
+            if (!r.ok) throw new Error((j && j.message) || ("HTTP " + r.status));
+            return j;
+          });
+        });
+      }
+
+      function tryServerApi(nome, emailTs, note) {
+        var bases = [];
+        try {
+          if (location.origin && location.origin.indexOf("100.99.") >= 0) bases.push(location.origin);
+          if (location.origin && /:\d+$/.test(location.origin) && location.pathname.indexOf("/install") >= 0) {
+            bases.push(location.origin);
+          }
+        } catch (_) {}
+        bases.push(STATS_BASE);
+        var payload = {
+          nome: nome,
+          emailTailscale: emailTs,
+          dispositivo: deviceLabel,
+          note: note || "",
+          guidaUrl: selfUrl
+        };
+        var chain = Promise.reject(new Error("no-server"));
+        bases.forEach(function (base) {
+          chain = chain.catch(function () {
+            return fetch(base.replace(/\/$/, "") + "/api/tailscale-invito-richiesta", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload)
+            }).then(function (r) {
+              return r.json().then(function (j) {
+                if (!r.ok || !j.success) throw new Error((j && j.message) || ("HTTP " + r.status));
+                return j;
+              });
+            });
+          });
+        });
+        return chain;
+      }
+
+      var btnInvito = document.getElementById("btn-invia-invito");
+      if (btnInvito) {
+        btnInvito.addEventListener("click", function () {
+          var nome = (document.getElementById("invito-nome").value || "").trim();
+          var emailTs = (document.getElementById("invito-email").value || "").trim();
+          var note = (document.getElementById("invito-note").value || "").trim();
+          if (!nome || !emailTs || emailTs.indexOf("@") < 0) {
+            showInvitoStatus(false, "Inserisci nome e email dell’account Tailscale creato.");
+            return;
+          }
+          btnInvito.disabled = true;
+          btnInvito.textContent = "Invio in corso…";
+          showInvitoStatus(true, "Invio richiesta…");
+
+          tryServerApi(nome, emailTs, note)
+            .then(function () {
+              showInvitoStatus(true, "Richiesta inviata a Luca. Quando ricevi l’invito via email, vai al passo 3.");
+              try { localStorage.setItem("pt_ts_invito_ok", "1"); } catch (_) {}
+            })
+            .catch(function () {
+              return tryFormSubmit(nome, emailTs, note).then(function () {
+                showInvitoStatus(true, "Richiesta inviata a Luca. Quando ricevi l’invito via email, vai al passo 3.");
+                try { localStorage.setItem("pt_ts_invito_ok", "1"); } catch (_) {}
+              });
+            })
+            .catch(function () {
+              openMailto(nome, emailTs, note);
+              showInvitoStatus(true, "Si è aperta l’app email con il messaggio già pronto: tocca Invia. Poi attendi l’invito da Luca (passo 3).");
+              try { localStorage.setItem("pt_ts_invito_ok", "1"); } catch (_) {}
+            })
+            .finally(function () {
+              btnInvito.disabled = false;
+              btnInvito.textContent = "Invia richiesta invito a Luca";
+            });
+        });
+      }
+
       var current = 1;
       function showStep(n) {
-        current = Math.max(1, Math.min(4, n));
+        current = Math.max(1, Math.min(MAX_STEP, n));
         document.querySelectorAll(".panel[data-step]").forEach(function (p) {
           p.classList.toggle("active", Number(p.getAttribute("data-step")) === current);
         });
@@ -299,7 +539,7 @@
         b.addEventListener("click", function () { showStep(Number(b.getAttribute("data-prev"))); });
       });
       var stepParam = Number(new URLSearchParams(location.search).get("step"));
-      if (stepParam >= 1 && stepParam <= 4) showStep(stepParam);
+      if (stepParam >= 1 && stepParam <= MAX_STEP) showStep(stepParam);
     })();
   </script>
 </body>
